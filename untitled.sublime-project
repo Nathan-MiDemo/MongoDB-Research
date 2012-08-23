@@ -1,0 +1,17 @@
+{
+	"folders":
+	[
+		{
+			"path": ".",
+			"name": "Root"
+		}
+	],
+
+	"settings":
+	{
+	    "rope_autoimport_modules":
+	    [
+	        "random.*"
+	    ]
+	}	
+}
