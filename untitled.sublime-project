@@ -11,7 +11,8 @@
 	{
 	    "rope_autoimport_modules":
 	    [
-	        "random.*"
+	        "random.*",
+	        "unittest.*"
 	    ]
 	}	
 }
