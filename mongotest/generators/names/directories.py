@@ -14,10 +14,12 @@ def directory_generator():
 	a new directory randomly in one of the previously created directories and
 	returns it
 	'''
-	yield '/'
-	directories = ['/']
+	directories = []
 	while True:
-		new_directory = ''.join((random.choice(directories), directory_name(), '/'))
+		if not directories:
+			new_dir = '/'
+		else:
+			new_dir = ''.join((random.choice(directories), directory_name(), '/'))
 
-		directories.append(new_directory)
-		yield new_directory
+		directories.append(new_dir)
+		yield new_dir
