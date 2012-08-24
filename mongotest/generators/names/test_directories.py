@@ -33,11 +33,11 @@ class TestDirectories(unittest.TestCase):
         dir_generator = directories.directory_generator()
 
         #get 30 sample directories
-        sample_directories = [dir for dir, _ in directories.directory_generator(), xrange(30)]
+        sample_directories = [dir for dir, _ in zip(directories.directory_generator(), xrange(30))]
 
         self.assertIs(sample_directories[0], '/')
 
         for dir in sample_directories[1:]:
             separator = dir.rfind('/', 0, -1)
-            containing_dir = dir[:separator]
+            containing_dir = dir[:separator + 1]
             self.assertIn(containing_dir, sample_directories)
