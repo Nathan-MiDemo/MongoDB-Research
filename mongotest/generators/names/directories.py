@@ -12,10 +12,10 @@ def directory_generator():
 	'''
 	Generator for a directory hierarchy. Each time it is iterated, it creates
 	a new directory randomly in one of the previously created directories and
-	returns i
+	returns it
 	'''
-	directories = ['/']
 	yield '/'
+	directories = ['/']
 	while True:
 		new_directory = ''.join((random.choice(directories), directory_name(), '/'))
 
