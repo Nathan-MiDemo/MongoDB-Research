@@ -1,8 +1,12 @@
 import random
+import string
 from ... import utility
 
 #todo: make this better
-char_set = 'abcdefghigklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345679'
+#char_set = 'abcdefghigklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345679'
+
+#fixed: better! MUCH better
+char_set = string.letters + string.numbers
 
 def generate_name(length):
     '''
