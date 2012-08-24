@@ -18,9 +18,8 @@ class TestDirectories(unittest.TestCase):
         #sanity checks 100 times, giving a 1% chance of a false positive
         for name in (directories.directory_name() for _ in xrange(100)):
             #length is beteen 1 and 32
-            print name
             self.assertLessEqual(len(name), 32)
-            self.assertGreaterEqueal(len(name), 1)
+            self.assertGreaterEqual(len(name), 1)
             self.assertIsNot(re.match('[a-zA-Z0-9]+', name), None)
 
     def test_random_heirarchies(self):
