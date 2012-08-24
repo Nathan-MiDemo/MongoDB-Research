@@ -6,7 +6,7 @@ from ... import utility
 #char_set = 'abcdefghigklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345679'
 
 #fixed: better! MUCH better
-char_set = string.letters + string.numbers
+char_set = string.letters + string.digits
 
 def generate_name(length):
     '''

@@ -42,7 +42,7 @@ mime_types = {
 		}
 	}
 
-def random_mime_type(type=None):
+def random_mime_type(type=None, subtype=None):
 	'''
 	Returns a tuple of (mime_type, extension). Mime_type is a tuple containing
 	(supertype, subtype). If the type parameter is not None, the supertype will
@@ -50,11 +50,12 @@ def random_mime_type(type=None):
 	'''
 
 	if type is None:
-		type = random.choice(self.mime_types.keys())
+		type = random.choice(mime_types.keys())
 
-	subtype = random.choice(self.mime_types[type].keys())
+	if subtype is None:
+		subtype = random.choice(mime_types[type].keys())
 
-	return (type, subtype), self.mime_types[type][subtype]
+	return (type, subtype), mime_types[type][subtype]
 
 def file_name():
 	'''
