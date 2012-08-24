@@ -1,5 +1,5 @@
 import random
-from names import generate_name
+import names
 
 mime_types = {
 		"image":
@@ -61,7 +61,7 @@ def file_name():
 	Creates a random file name, which is a random alphanumeric string with a
 	random number of characters, between 1 and 64, selected on a bell curve.
 	'''
-	return generate_name(64)
+	return names.generate_name(64)
 
 def file(type = None):
 	'''

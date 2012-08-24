@@ -1,12 +1,12 @@
 import random
-from names import generate_name
+import names
 
 def directory_name():
 	'''
 	Generates a random directory name, which is an alphanumeric string of
 	length 1 to 32, selected from a bell curve
 	'''
-	return generate_name(32)
+	return names.generate_name(32)
 
 def directory_generator():
 	'''

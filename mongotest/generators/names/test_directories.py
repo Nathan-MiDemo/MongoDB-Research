@@ -16,8 +16,9 @@ class TestDirectories(unittest.TestCase):
         #Note that it is IMPOSSIBLE to determine with certainty that the
         #generate_name function is perfoming perfectly. Instead, we repeat the
         #sanity checks 100 times, giving a 1% chance of a false positive
-        for name in (directories.generate_name() for _ in xrange(100)):
+        for name in (directories.directory_name() for _ in xrange(100)):
             #length is beteen 1 and 32
+            print name
             self.assertLessEqual(len(name), 32)
             self.assertGreaterEqueal(len(name), 1)
             self.assertIsNot(re.match('[a-zA-Z0-9]+', name), None)
@@ -32,7 +33,7 @@ class TestDirectories(unittest.TestCase):
         dir_generator = directories.directory_generator()
 
         #get 30 sample directories
-        sample_directories = [dir for dir, _ in directories.directory_generator, xrange(30)]
+        sample_directories = [dir for dir, _ in directories.directory_generator(), xrange(30)]
 
         self.assertIs(sample_directories[0], '/')
 
