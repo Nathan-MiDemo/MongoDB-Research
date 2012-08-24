@@ -1,4 +1,5 @@
-from . import generate_name
+import random
+from names import generate_name
 
 mime_types = {
 		"image":

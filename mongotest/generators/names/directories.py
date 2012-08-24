@@ -1,5 +1,5 @@
 import random
-from . import generate_name
+from names import generate_name
 
 def directory_name():
 	'''
