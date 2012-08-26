@@ -1,6 +1,8 @@
 import random
 
 def random_int_bell_curve(min, max):
+    if min < max:
+        raise ValueError("Invalid range for random int generation")
     '''
     Generate a random int on a bell curve from min to max
     '''
