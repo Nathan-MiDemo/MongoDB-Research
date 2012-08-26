@@ -4,7 +4,7 @@ import names
 
 class TestNames(unittest.TestCase):
     def test_name_generation(self):
-        name = names.generate_name(30):
+        name = names.generate_name(30)
 
         self.assertGreaterEqual(len(name), 1)
         self.assertLessEqueal(len(name), 30)
