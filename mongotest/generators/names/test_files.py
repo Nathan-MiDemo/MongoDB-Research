@@ -3,7 +3,7 @@ import unittest
 import files
 
 class TestFiles(unittest.TestCase):
-    def mime_test(self, mime_type, extension):
+    def check_valid_mime_type(self, mime_type, extension):
         type, subtype = mime_type
 
         self.assertIn(type, files.mime_types)
@@ -13,14 +13,14 @@ class TestFiles(unittest.TestCase):
     def test_mime_types(self):
         mime_type, extension = files.random_mime_type()
 
-        self.mime_test(mime_type, extension)
+        self.check_valid_mime_type(mime_type, extension)
 
     def test_mime_type_fixed_type(self):
         mime_type, extension = files.random_mime_type("audio")
         type, _ = mime_type
         
         self.assertEqual(type, "audio")
-        self.mime_test(mime_type, extension)
+        self.check_valid_mime_type(mime_type, extension)
 
     def test_mime_type_fixed_subtype(self):
         mime_type, extension = files.random_mime_type("audio", "mpeg")
@@ -29,7 +29,7 @@ class TestFiles(unittest.TestCase):
         self.assertEqual(type, "audio")
         self.assertEqual(subtype, "mpeg")
         self.assertEqual(extension, "mp3")
-        self.mime_test(mime_type, extension)
+        self.check_valid_mime_type(mime_type, extension)
 
     def test_mime_type_mismatch(self):
         with self.assertRaises(KeyError):
