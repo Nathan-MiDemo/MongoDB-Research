@@ -59,13 +59,23 @@ class TestDirectories(unittest.TestCase):
             self.assertEqual(i, 0)
 
     def test_max_subdirectories(self):
-        generator = itertools.islice(directories.directory_generator(max_subdirectories_per_directory=10), 1, 1000)
+        generator = directories.directory_generator(max_subdirectories_per_directory=5)
         num_subdirectories = {'/': 0}
 
-        for dir in generator:
+        for dir in itertools.islice(generator, 1, 1000):
             containing_dir, _ = path.split(dir)
-            if containing_dir not in num_subdirectories.keys():
-                num_subdirectories[containing_dir] = 0
-
+            num_subdirectories[dir] = 0
             num_subdirectories[containing_dir] += 1
-            self.assertLessEqual(num_subdirectories[containing_dir], 10)
+
+        for num in num_subdirectories.itervalues():
+            self.assertLessEqual(num, 5)
+
+    def test_depth_and_subdirectories(self):
+        generator = directories.directory_generator(max_subdirectories_per_directory=3, max_depth=3)
+
+        #assumes that the individual max tests work. Having both maxes should
+        #cap the number of subdirectories
+
+        all_dirs = list(itertools.islice(generator, 50))
+        
+        self.assertEqual(len(all_dirs), 40)
