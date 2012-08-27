@@ -36,12 +36,13 @@ class TestDirectories(unittest.TestCase):
         dir_generator = directories.directory_generator()
 
         #get 1000 sample directories
-        sample_directories = [dir for dir in itertools.islice]
+        sample_directories = [dir for dir in itertools.islice(directories.directory_generator(), 1000)]
 
         self.assertIs(sample_directories[0], '/')
 
         for dir in sample_directories[1:]:
             containing_dir, _ = path.split(dir)
+            self.assertIn(containing_dir, sample_directories)
 
     #Like with some of the others, there's no way to assure that this test gives a false positive
     def test_max_depth(self):
@@ -58,8 +59,8 @@ class TestDirectories(unittest.TestCase):
             self.assertEqual(i, 0)
 
     def test_max_subdirectories(self):
-        generator = (dir for dir in itertools.islice(directories.directory_generator(max_subdirectories_per_directory=10), 1, 1000)
-        num_subdirectories = {'/':0}
+        generator = itertools.islice(directories.directory_generator(max_subdirectories_per_directory=10), 1, 1000)
+        num_subdirectories = {'/': 0}
 
         for dir in generator:
             containing_dir, _ = path.split(dir)

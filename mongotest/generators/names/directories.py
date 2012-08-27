@@ -37,7 +37,7 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None):
 	while directories:
 		#sadly, random.choice doesn't work on sets.
 		containing_dir = random.sample(directories, 1)[0]
-		new_dir = path.join(containing_directory, directory_name())
+		new_dir = path.join(containing_dir, directory_name())
 
 		if max_subdirectories_per_directory is not None:
 			num_subdirectories_table[new_dir] = 0
