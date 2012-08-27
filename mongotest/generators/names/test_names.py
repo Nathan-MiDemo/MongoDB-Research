@@ -8,7 +8,7 @@ class TestNames(unittest.TestCase):
 
         self.assertGreaterEqual(len(name), 1)
         self.assertLessEqual(len(name), 30)
-        self.assertIsNot(re.match("[a-zA-Z0-9]*", name), None)
+        self.assertIsInstance(re.match("[a-zA-Z0-9]*", name), re.MatchObject)
 
     def test_bad_name_generation(self):
         with self.assertRaises(ValueError):
