@@ -38,7 +38,7 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None, m
 	while True:
 		#sadly, random.choice doesn't work on sets.
 		containing_directory = random.sample(directories, 1)[0]
-		new_dir = join((containing_directory, directory_name(), '/'))
+		new_dir = ''.join((containing_directory, directory_name(), '/'))
 
 		#2 Notes here. First on the math- the new directory hasn't been
 		#added yet, but quantify will count the directory itself as a
