@@ -9,14 +9,14 @@ class TestDateGenerator(unittest.TestCase):
 
         iso_match = re.match("(?P<year>[0-9]{4})-(?P<month>[01][0-9])-(?P<day>[0-3][0-9])T(?P<hour>[0-2][0-9]):(?P<minute>[0-5][0-9]):(?P<second>[0-5][0-9])", sample_date['iso'])
 
-        self.assertIsInstance(iso_match, re.MatchObject)
+        self.assertIsNot(iso_match, None)
 
         year = int(iso_match.group('year'))
-        month = int(iso_match.group(''))
-        day = int(iso_match.group(''))
-        hour = int(iso_match.group(''))
-        minute = int(iso_match.group(''))
-        second = int(iso_match.group(''))
+        month = int(iso_match.group('month'))
+        day = int(iso_match.group('day'))
+        hour = int(iso_match.group('hour'))
+        minute = int(iso_match.group('minute'))
+        second = int(iso_match.group('second'))
 
         self.assertEqual(year, sample_date['date']['year'])
         self.assertEqual(month, sample_date['date']['month'])
