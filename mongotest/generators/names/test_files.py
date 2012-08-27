@@ -42,11 +42,12 @@ class TestMimeGeneration(unittest.TestCase):
 
 class TestFiles(unittest.TestCase):
     def test_file_name(self):
-        name = files.file_name()
+        for _ in xrange(1000):
+            name = files.file_name()
 
-        self.assertLessEqual(len(name), 64)
-        self.assertGreaterEqual(len(name), 1)
-        self.assertIsNot(re.match("[a-zA-Z0-9]*", name), None)
+            self.assertLessEqual(len(name), 64)
+            self.assertGreaterEqual(len(name), 1)
+            self.assertIsNot(re.match("[a-zA-Z0-9]*", name), None)
 
     def test_full_file(self):
         file, mime_type = files.file()
