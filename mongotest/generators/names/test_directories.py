@@ -22,7 +22,7 @@ class TestDirectories(unittest.TestCase):
             self.assertGreaterEqual(len(name), 1)
             self.assertIsNot(re.match('[a-zA-Z0-9]+', name), None)
 
-    def test_random_heirarchies(self):
+    def test_random_heirarchies_basic(self):
         '''
         Test the directories.directory_generator generator. Checks that the
         heirarchy makes sense- that is, every directory has an enclosing
@@ -40,3 +40,28 @@ class TestDirectories(unittest.TestCase):
             separator = dir.rfind('/', 0, -1)
             containing_dir = dir[:separator + 1]
             self.assertIn(containing_dir, sample_directories)
+
+    def test_global_limit(self):
+        '''
+        Test that the generator stops when given a global limit
+        '''
+
+        generator = directories.directory_generator(max_total_directories=20)
+
+        #can't do test like this, because if the generator is infinite it will hang
+        #self.assertEqual(len(list(generator)), 20)
+
+        iterations = 0
+
+        #need to test that exactly 20 iterations happen, without allowing the loop to go on forevefr
+        for _, i in zip(generator, xrange(25)):
+            self.assertLess(i, 20)
+            iterations += 1
+
+        self.assertEqual(iterations, 20)
+
+        #also test for 0
+        generator = directories.directory_generator(max_total_directories=0)
+
+        with self.assertRaises(StopIteration):
+            _ = next()
