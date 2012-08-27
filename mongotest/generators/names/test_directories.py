@@ -1,6 +1,8 @@
 import unittest
-import directories
 import re
+import itertools
+
+import directories
 
 class TestDirectories(unittest.TestCase):
     def setUp(self):
@@ -41,27 +43,17 @@ class TestDirectories(unittest.TestCase):
             containing_dir = dir[:separator + 1]
             self.assertIn(containing_dir, sample_directories)
 
-    def test_global_limit(self):
-        '''
-        Test that the generator stops when given a global limit
-        '''
 
-        generator = directories.directory_generator(max_total_directories=20)
+    #Like with some of the others, there's no way to assure that this test gives a false positive
+    def test_max_depth(self):
+        generator = directories.directory_generator(max_depth=2)
 
-        #can't do test like this, because if the generator is infinite it will hang
-        #self.assertEqual(len(list(generator)), 20)
+        for dir in itertools.islice(generator, 100):
+            self.assertLessEqual(dir.count('/'), 3)
 
-        iterations = 0
+        generator = directories.directory_generator(max_depth=0)
 
-        #need to test that exactly 20 iterations happen, without allowing the loop to go on forevefr
-        for _, i in zip(generator, xrange(25)):
-            self.assertLess(i, 20)
-            iterations += 1
-
-        self.assertEqual(iterations, 20)
-
-        #also test for 0
-        generator = directories.directory_generator(max_total_directories=0)
-
-        with self.assertRaises(StopIteration):
-            _ = next(generator)
+        #this should only iterate once
+        for i, dir in enumerate(itertools.islice(generator, 3):
+            self.assertEqual(dir, '/')
+            self.assertEqual(i, 0)

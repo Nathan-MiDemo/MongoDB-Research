@@ -40,7 +40,6 @@ class TestMimeGeneration(unittest.TestCase):
             mime_type, extension = files.random_mime_type("foo")
 
 
-
 class TestFiles(unittest.TestCase):
     def test_file_name(self):
         name = files.file_name()
