@@ -1,11 +1,14 @@
 import random
+import itertools
 
 def random_int_bell_curve(min, max):
-    if min > max:
-        raise ValueError("Invalid range for random int generation")
     '''
     Generate a random int on a bell curve from min to max
     '''
+    #TODO: implement range cutting for a less distinct bell curve
+
+    if min > max:
+        raise ValueError("Invalid range for random int generation")
     return sum((random.randint(0, 1) for _ in xrange(max - min))) + min
 
 def print_histogram(items):
@@ -29,3 +32,8 @@ def test_bell_curve(min, max, samples):
     generate on a bell curve
     '''
     print_histogram([random_int_bell_curve(min, max) for _ in xrange(samples)])
+
+#Lifted directly from the itertools recipie page
+def quantify(iterable, pred=bool):
+    '''Count how many times the predicate is true'''
+    return sum(itertools.imap(pred, iterable))

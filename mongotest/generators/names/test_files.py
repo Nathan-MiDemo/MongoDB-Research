@@ -2,7 +2,7 @@ import re
 import unittest
 import files
 
-class TestFiles(unittest.TestCase):
+class TestMimeGeneration(unittest.TestCase):
     def check_valid_mime_type(self, mime_type, extension):
         type, subtype = mime_type
 
@@ -39,6 +39,9 @@ class TestFiles(unittest.TestCase):
         with self.assertRaises(KeyError):
             mime_type, extension = files.random_mime_type("foo")
 
+
+
+class TestFiles(unittest.TestCase):
     def test_file_name(self):
         name = files.file_name()
 
