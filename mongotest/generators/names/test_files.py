@@ -47,7 +47,7 @@ class TestFiles(unittest.TestCase):
 
             self.assertLessEqual(len(name), 64)
             self.assertGreaterEqual(len(name), 1)
-            self.assertIsInstance(re.match("[a-zA-Z0-9]*", name), re.MatchObject)
+            self.assertIsNot(re.match("[a-zA-Z0-9]*", name), None)
 
     def test_full_file(self):
         file, mime_type = files.file()
