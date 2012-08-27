@@ -64,4 +64,4 @@ class TestDirectories(unittest.TestCase):
         generator = directories.directory_generator(max_total_directories=0)
 
         with self.assertRaises(StopIteration):
-            _ = next()
+            _ = next(generator)
