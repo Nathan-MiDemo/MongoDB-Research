@@ -77,5 +77,15 @@ class TestDirectories(unittest.TestCase):
         #cap the number of subdirectories
 
         all_dirs = list(itertools.islice(generator, 50))
-        
+
         self.assertEqual(len(all_dirs), 40)
+
+    def test_invalid_max_depth(self):
+        with self.assertRaises(ValueError):
+            generator = directories.directory_generator(max_depth=-5)
+            next(generator)
+
+    def test_invalid_max_subdirectories(self):
+        with self.assertRaises(ValueError):
+            generator = directories.directory_generator(max_subdirectories_per_directory=-5)
+            next(generator)
