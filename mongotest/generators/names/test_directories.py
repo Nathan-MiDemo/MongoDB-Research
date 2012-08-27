@@ -1,6 +1,7 @@
 import unittest
 import re
 import itertools
+import os.path as path
 
 import directories
 
@@ -17,8 +18,9 @@ class TestDirectories(unittest.TestCase):
 
         #Note that it is IMPOSSIBLE to determine with certainty that the
         #generate_name function is perfoming perfectly. Instead, we repeat the
-        #sanity checks 100 times, giving a 1% chance of a false positive
-        for name in (directories.directory_name() for _ in xrange(100)):
+        #sanity checks 1000 times, giving a .1% chance of a false positive
+        for _ in xrange(1000):
+            name = directories.directory_name()
             #length is beteen 1 and 32
             self.assertLessEqual(len(name), 32)
             self.assertGreaterEqual(len(name), 1)
@@ -33,27 +35,36 @@ class TestDirectories(unittest.TestCase):
         #create directories. For each one, confirm that the parent directory exists
         dir_generator = directories.directory_generator()
 
-        #get 30 sample directories
-        sample_directories = [dir for dir, _ in zip(directories.directory_generator(), xrange(30))]
+        #get 1000 sample directories
+        sample_directories = [dir for dir in itertools.islice]
 
         self.assertIs(sample_directories[0], '/')
 
         for dir in sample_directories[1:]:
-            separator = dir.rfind('/', 0, -1)
-            containing_dir = dir[:separator + 1]
-            self.assertIn(containing_dir, sample_directories)
-
+            containing_dir, _ = path.split(dir)
 
     #Like with some of the others, there's no way to assure that this test gives a false positive
     def test_max_depth(self):
-        generator = directories.directory_generator(max_depth=2)
+        generator = directories.directory_generator(max_depth=3)
 
-        for dir in itertools.islice(generator, 100):
+        for dir in itertools.islice(generator, 1000):
             self.assertLessEqual(dir.count('/'), 3)
 
         generator = directories.directory_generator(max_depth=0)
 
         #this should only iterate once
-        for i, dir in enumerate(itertools.islice(generator, 3):
+        for i, dir in enumerate(itertools.islice(generator, 3)):
             self.assertEqual(dir, '/')
             self.assertEqual(i, 0)
+
+    def test_max_subdirectories(self):
+        generator = (dir for dir in itertools.islice(directories.directory_generator(max_subdirectories_per_directory=10), 1, 1000)
+        num_subdirectories = {'/':0}
+
+        for dir in generator:
+            containing_dir, _ = path.split(dir)
+            if containing_dir not in num_subdirectories.keys():
+                num_subdirectories[containing_dir] = 0
+
+            num_subdirectories[containing_dir] += 1
+            self.assertLessEqual(num_subdirectories[containing_dir], 10)
