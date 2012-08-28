@@ -1,7 +1,7 @@
 import unittest
 import re
 
-import date
+import dates
 
 class TestDateGenerator(unittest.TestCase):
     def test_date_generation(self):
