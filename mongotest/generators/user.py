@@ -23,9 +23,12 @@ def make_dates():
 
     return date1, date2
 
-def user_data_generator(bucket, num_directories, max_depth=None, max_subdirectories=None):
+def user_data_generator(bucket, num_directories, max_depth=None, max_subdirectories=None, id=None):
+    '''
+    Generator for MongoDB data. Generates
+    '''
     dirs = list(itertools.islice(directories.directory_generator(max_depth, max_subdirectories), num_directories))
-    id = ObjectID()
+    id = ObjectID() if id is None else id
     bucket_url = url.generate_url(bucket)
     for _ in xrange(num_files):
         composition = {}

@@ -6,7 +6,7 @@ import dates
 class TestDateGenerator(unittest.TestCase):
     def test_date_generation(self):
         for _ in xrange(1000):
-            sample_date = date.random_datetime()
+            sample_date = dates.random_datetime()
 
             iso_match = re.match("(?P<year>[0-9]{4})-(?P<month>[01][0-9])-(?P<day>[0-3][0-9])T(?P<hour>[0-2][0-9]):(?P<minute>[0-5][0-9]):(?P<second>[0-5][0-9])", sample_date['iso'])
 
