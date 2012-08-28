@@ -2,7 +2,7 @@ import random
 import os.path as path
 
 import names
-from ... import utility
+from .. import utility
 
 def directory_name():
 	'''

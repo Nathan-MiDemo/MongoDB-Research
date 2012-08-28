@@ -1,6 +1,6 @@
 import random
 import string
-from ... import utility
+from .. import utility
 
 #todo: make this better
 #char_set = 'abcdefghigklmnopqrstuvwkyzABCDEFGHIJKLMNOPQRSTUVWXYZ012345679'
