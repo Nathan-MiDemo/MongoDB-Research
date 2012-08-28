@@ -30,13 +30,12 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None):
 	if max_depth is not None and max_depth == 0:
 		return #this stops iteration
 
-	directories = set('/')
+	directories = ['/']
 	if max_subdirectories_per_directory is not None:
 		num_subdirectories_table = {'/': 0}
 	
 	while directories:
-		#sadly, random.choice doesn't work on sets.
-		containing_dir = random.sample(directories, 1)[0]
+		containing_dir = random.choice(directories)
 		new_dir = path.join(containing_dir, directory_name())
 
 		if max_subdirectories_per_directory is not None:
@@ -49,6 +48,6 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None):
 		#subdirectories. Therefore, only add new directories to it that are
 		#below the depth limit
 		if max_depth is None or new_dir.count('/') < max_depth:
-			directories.add(new_dir)
+			directories.append(new_dir)
 
 		yield new_dir
