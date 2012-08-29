@@ -6,7 +6,7 @@ mime_types = {
 		{
 			"gif": "gif",
 			"jpeg": "jpg",
-			"png": "ping",
+			"png": "png",
 			"tiff": "tiff"
 		},
 		"audio":

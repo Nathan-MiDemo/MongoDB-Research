@@ -1,11 +1,11 @@
+import itertools
+import random
+import bson
+
 import directories
 import files
 import dates
 import url
-
-import itertools
-import random
-from bson.json_util import ObjectID
 
 def make_dates():
     '''
@@ -23,14 +23,16 @@ def make_dates():
 
     return date1, date2
 
-def user_data_generator(bucket, num_directories, max_depth=None, max_subdirectories=None, id=None):
+def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdirectories=None, id=None):
     '''
-    Generator for MongoDB data. Generates
+    Generator for MongoDB data. Generates dicts ready to be inserted into
+    MongoDB for a single user. Iterates infinitly.
     '''
     dirs = list(itertools.islice(directories.directory_generator(max_depth, max_subdirectories), num_directories))
-    id = ObjectID() if id is None else id
+    id = bson.ObjectId() if id is None else id
     bucket_url = url.generate_url(bucket)
-    for _ in xrange(num_files):
+
+    while True:
         composition = {}
         composition["accountId"] = id
         composition["path"] = random.choice(dirs)
@@ -41,4 +43,3 @@ def user_data_generator(bucket, num_directories, max_depth=None, max_subdirector
         composition["url"] = ''.join((bucket_url, file_name))
 
         yield composition
-
