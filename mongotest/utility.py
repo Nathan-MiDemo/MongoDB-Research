@@ -2,53 +2,61 @@ import random
 import itertools
 from math import floor, ceil
 
-def random_int_bell_curve(min, max, lean=.5, clamp_min=None, clamp_max=None, generator=random):
+def random_int_bell_curve(min, max, lean=.5, narrow=10, generator=random):
     '''
-    Generate a random int on a binary distributon with p=lean. The number will
-    be in the range min to max, unless clamps are given, in which case it will
-    be between clamp_min and clamp_max.
+    Generate a random int on a beta distribution, with a mean of lean, scaled
+    to min and max. The parameters are tuned such that alpha=lean*narrow,
+    beta=(1-lean)*narrow. Therefore, the larger narrow is, the narrower the
+    graph will be.
     '''
 
     if min >= max:
         raise ValueError("Invalid min-max range for random int generation")
 
-    if clamp_min is None:
-        clamp_min = min
-    if clamp_max is None:
-        clamp_max = max
+    if not 0 <= lean <= 1:
+        raise ValueError("lean must be between 0 and 1")
 
-    if clamp_min >= clamp_max:
-        raise ValueError("Invalid clamp range")
+    alpha = lean * narrow
+    beta = (1 - lean) * narrow
 
-    def run_test():
-        return 1 if generator.random() < lean else 0
+    return int(generator.betavariate(alpha, beta) * (max - min)) + min
 
-    while True:
-        candidate = sum((run_test() for _ in xrange(max-min))) + min
-        if candidate >= clamp_min or candidate <= clamp_max:
-            return candidate
 
-def print_histogram(items, scale):
+
+def print_histogram(items, scale, clamp_left=None, clamp_right=None):
     '''
     Takes a list of integers, and prints a histogram of that list, where each
     int is a separate bucket.
     '''
-    x = sorted(random.sample(items, int(ceil(len(items) * scale))))
-    bucket = x[0]
+    counts = {}
+    def count(x):
+        if x in counts:
+            counts[x] += scale
+        else:
+            counts[x] = scale
 
-    print bucket, "\t:",
-    for item in x:
-        while bucket != item:
-            bucket += 1
-            print '\n', bucket, "\t:",
-        print "*",
+    map(count, items)
 
-def test_bell_curve(samples, scale, min, max, lean, clampmin, clampmax):
+    if clamp_left is None:
+        clamp_left = min(counts.iterkeys())
+
+    if clamp_right is None:
+        clamp_right = max(counts.iterkeys())
+
+    for bucket in xrange(clamp_left, clamp_right + 1):
+        print bucket, '\t:',
+        if bucket in counts:
+            for _ in xrange(int(floor(counts[bucket]))):
+                print '*',
+        print '\n',
+
+
+def test_bell_curve(samples, scale, min, max, lean):
     '''
     Simple demonstration function to show that random_int_bell_curve does
     generate on a bell curve
     '''
-    print_histogram([random_int_bell_curve(min, max, lean, clampmin, clampmax) for _ in xrange(samples)], scale)
+    print_histogram((random_int_bell_curve(min, max, lean) for _ in xrange(samples)), scale, min, max)
 
 #Lifted directly from the itertools recipie page
 def quantify(iterable, pred=bool):
