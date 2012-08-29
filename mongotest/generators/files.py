@@ -70,6 +70,6 @@ def file(type = None, generator=random):
 	in a tuple. Both objects are strings.
 	'''
 
-	mime_type, extension = random_mime_type(type, generator)
+	mime_type, extension = random_mime_type(type, generator=generator)
 
 	return '.'.join((file_name(generator), extension)), '/'.join(mime_type)
