@@ -8,7 +8,7 @@ import bson
 
 class TestUser(unittest.TestCase):
     def test_user_random_consistency(self):
-        id = bson.ObjectID()
+        id = bson.ObjectId()
 
         random.seed(2345)
         list1 = list(itertools.islice(user.user_data_generator(100, id=id), 10))
@@ -29,9 +29,9 @@ class TestUser(unittest.TestCase):
         id1 = next(generator1)['accountId']
 
         for file in itertools.islice(generator1, 10):
-            self.assertEqual(id1, file['accountOd'])
+            self.assertEqual(id1, file['accountId'])
 
-        generator2 = user_data_generator(100)
+        generator2 = user.user_data_generator(100)
         id2 = next(generator2)['accountId']
 
         self.assertNotEqual(id1, id2)
