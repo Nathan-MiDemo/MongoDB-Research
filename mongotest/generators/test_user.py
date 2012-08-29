@@ -10,11 +10,13 @@ class TestUser(unittest.TestCase):
     def test_user_random_consistency(self):
         id = bson.ObjectId()
 
-        random.seed(2345)
-        list1 = list(itertools.islice(user.user_data_generator(100, id=id), 10))
+        gen1 = random.Random()
+        gen1.seed(2345)
+        list1 = list(itertools.islice(user.user_data_generator(100, id=id, generator=gen1), 10))
 
-        random.seed(2345)
-        list2 = list(itertools.islice(user.user_data_generator(100, id=id), 10))
+        gen2 = random.Random()
+        gen2.seed(2345)
+        list2 = list(itertools.islice(user.user_data_generator(100, id=id, generator=gen2), 10))
 
         for item1, item2 in itertools.izip(list1, list2):
             self.assertEqual(item1, item2)
