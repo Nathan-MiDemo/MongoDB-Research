@@ -5,7 +5,7 @@ import os.path as path
 
 import user
 
-class TestUser(user.unittest):
+class TestUser(unittest.TestCase):
     def test_user_random_consistency(self):
         id = user.bson.ObjectID()
 
@@ -27,13 +27,13 @@ class TestUser(user.unittest):
         generator1 = user.user_data_generator(100)
         id1 = next(generator1)['accountId']
 
-        for file in islice(generator1, 10):
+        for file in islice(generator1, 10):!ssh Jen 
             self.assertEqual(id1, file['accountOd'])
 
         generator2 = user_data_generator(100)
         id2 = next(generator2)['accountId']
 
         self.assertNotEqual(id1, id2)
-        
+
         for file in islice(generator2, 10):
             self.assertEqual(id2, file['accountId'])
