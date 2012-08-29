@@ -28,7 +28,7 @@ def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdir
     Generator for MongoDB data. Generates dicts ready to be inserted into
     MongoDB for a single user. Iterates infinitly.
     '''
-    dirs = list(itertools.islice(directories.directory_generator(max_depth, max_subdirectories), num_directories))
+    dirs = list(itertools.islice(directories.directory_generator(max_depth, max_subdirectories, generator=generator), num_directories))
     id = bson.ObjectId() if id is None else id
     bucket_url = url.generate_url(bucket)
 
