@@ -4,10 +4,11 @@ import itertools
 import os.path as path
 
 import user
+import bson
 
 class TestUser(unittest.TestCase):
     def test_user_random_consistency(self):
-        id = user.bson.ObjectID()
+        id = bson.ObjectID()
 
         random.seed(2345)
         list1 = list(itertools.islice(user.user_data_generator(100, id=id), 10))
