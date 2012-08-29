@@ -8,10 +8,10 @@ from .. import utility
 #fixed: better! MUCH better
 char_set = string.letters + string.digits
 
-def generate_name(length):
+def generate_name(length, generator=random):
     '''
     generates a random alphanumeric string with length 1 to length, along a
     bell curve
     '''
-    return ''.join(random.sample(char_set, utility.random_int_bell_curve(1, length)))
+    return ''.join(generator.sample(char_set, utility.random_int_bell_curve(1, length)))
     

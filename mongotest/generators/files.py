@@ -42,7 +42,7 @@ mime_types = {
 		}
 	}
 
-def random_mime_type(type=None, subtype=None):
+def random_mime_type(type=None, subtype=None, generator=random):
 	'''
 	Returns a tuple of (mime_type, extension). Mime_type is a tuple containing
 	(supertype, subtype). If the type parameter is not None, the supertype will
@@ -50,26 +50,26 @@ def random_mime_type(type=None, subtype=None):
 	'''
 
 	if type is None:
-		type = random.choice(mime_types.keys())
+		type = generator.choice(mime_types.keys())
 
 	if subtype is None:
-		subtype = random.choice(mime_types[type].keys())
+		subtype = generator.choice(mime_types[type].keys())
 
 	return (type, subtype), mime_types[type][subtype]
 
-def file_name():
+def file_name(generator=random):
 	'''
 	Creates a random file name, which is a random alphanumeric string with a
 	random number of characters, between 1 and 64, selected on a bell curve.
 	'''
-	return names.generate_name(64)
+	return names.generate_name(64, generator)
 
-def file(type = None):
+def file(type = None, generator=random):
 	'''
 	Creates a file object, which is a file name plus extension, and a mime type,
 	in a tuple. Both objects are strings.
 	'''
 
-	mime_type, extension = random_mime_type(type)
+	mime_type, extension = random_mime_type(type, generator)
 
-	return '.'.join((file_name(), extension)), '/'.join(mime_type)
+	return '.'.join((file_name(generator), extension)), '/'.join(mime_type)

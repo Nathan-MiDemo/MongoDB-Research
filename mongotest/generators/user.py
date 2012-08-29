@@ -7,12 +7,12 @@ import files
 import dates
 import url
 
-def make_dates():
+def make_dates(generator=random):
     '''
     Returns 2 date/time dicts. There is a 50% chance they will be the same;
     otherwise, the first date will always be before the second
     '''
-    if random.randint(0, 1):
+    if generator.randint(0, 1):
         date1 = dates.random_datetime()
         date2 = dates.random_datetime()
 
@@ -23,7 +23,7 @@ def make_dates():
 
     return date1, date2
 
-def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdirectories=None, id=None):
+def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdirectories=None, id=None, generator=random):
     '''
     Generator for MongoDB data. Generates dicts ready to be inserted into
     MongoDB for a single user. Iterates infinitly.
@@ -35,11 +35,11 @@ def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdir
     while True:
         composition = {}
         composition["accountId"] = id
-        composition["path"] = random.choice(dirs)
+        composition["path"] = generator.choice(dirs)
         file_name, composition["contentType"] = files.file()
         composition["name"] = file_name
         composition["dateTimeCreated"], composition["dateTimeModified"] = make_dates()
-        composition["size"] = random.randint(1000, 10000000000) #1KB to 10GB
+        composition["size"] = generator.randint(1000, 10000000000) #1KB to 10GB
         composition["url"] = ''.join((bucket_url, file_name))
 
         yield composition

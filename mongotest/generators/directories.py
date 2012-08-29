@@ -4,14 +4,14 @@ import os.path as path
 import names
 from .. import utility
 
-def directory_name():
+def directory_name(generator=random):
 	'''
 	Generates a random directory name, which is an alphanumeric string of
 	length 1 to 32, selected from a bell curve
 	'''
-	return names.generate_name(32)
+	return names.generate_name(32, generator)
 
-def directory_generator(max_depth=None, max_subdirectories_per_directory=None):
+def directory_generator(max_depth=None, max_subdirectories_per_directory=None, generator=random):
 	'''
 	Generator for a directory hierarchy. Each time it is iterated, it creates
 	a new directory randomly in one of the previously created directories and
@@ -35,7 +35,7 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None):
 		num_subdirectories_table = {'/': 0}
 	
 	while directories:
-		containing_dir = random.choice(directories)
+		containing_dir = generator.choice(directories)
 		new_dir = path.join(containing_dir, directory_name())
 
 		if max_subdirectories_per_directory is not None:
