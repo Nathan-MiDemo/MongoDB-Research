@@ -27,7 +27,7 @@ class TestUser(unittest.TestCase):
         generator1 = user.user_data_generator(100)
         id1 = next(generator1)['accountId']
 
-        for file in islice(generator1, 10):!ssh Jen 
+        for file in islice(generator1, 10):
             self.assertEqual(id1, file['accountOd'])
 
         generator2 = user_data_generator(100)
