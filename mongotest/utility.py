@@ -2,7 +2,7 @@ import random
 import itertools
 from math import floor, ceil
 
-def random_int_bell_curve(min, max, lean=.5, clamp_min=None, clamp_max=None):
+def random_int_bell_curve(min, max, lean=.5, clamp_min=None, clamp_max=None, generator=random):
     '''
     Generate a random int on a binary distributon with p=lean. The number will
     be in the range min to max, unless clamps are given, in which case it will
@@ -21,7 +21,7 @@ def random_int_bell_curve(min, max, lean=.5, clamp_min=None, clamp_max=None):
         raise ValueError("Invalid clamp range")
 
     def run_test():
-        return 1 if random.random() < lean else 0
+        return 1 if generator.random() < lean else 0
 
     while True:
         candidate = sum((run_test() for _ in xrange(max-min))) + min

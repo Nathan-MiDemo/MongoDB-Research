@@ -36,7 +36,7 @@ def directory_generator(max_depth=None, max_subdirectories_per_directory=None, g
 	
 	while directories:
 		containing_dir = generator.choice(directories)
-		new_dir = path.join(containing_dir, directory_name())
+		new_dir = path.join(containing_dir, directory_name(generator=generator))
 
 		if max_subdirectories_per_directory is not None:
 			num_subdirectories_table[new_dir] = 0
