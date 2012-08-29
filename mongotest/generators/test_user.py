@@ -27,7 +27,7 @@ class TestUser(unittest.TestCase):
         generator1 = user.user_data_generator(100)
         id1 = next(generator1)['accountId']
 
-        for file in islice(generator1, 10):
+        for file in itertools.islice(generator1, 10):
             self.assertEqual(id1, file['accountOd'])
 
         generator2 = user_data_generator(100)
@@ -35,5 +35,5 @@ class TestUser(unittest.TestCase):
 
         self.assertNotEqual(id1, id2)
 
-        for file in islice(generator2, 10):
+        for file in itertools.islice(generator2, 10):
             self.assertEqual(id2, file['accountId'])
