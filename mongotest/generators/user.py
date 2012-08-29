@@ -36,9 +36,9 @@ def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdir
         composition = {}
         composition["accountId"] = id
         composition["path"] = generator.choice(dirs)
-        file_name, composition["contentType"] = files.file(generator)
+        file_name, composition["contentType"] = files.file(generator=generator)
         composition["name"] = file_name
-        composition["dateTimeCreated"], composition["dateTimeModified"] = make_dates(generator)
+        composition["dateTimeCreated"], composition["dateTimeModified"] = make_dates(generator=generator)
         composition["size"] = generator.randint(1000, 10000000000) #1KB to 10GB
         composition["url"] = ''.join((bucket_url, file_name))
 
