@@ -4,21 +4,15 @@ import itertools
 import os.path as path
 
 import directories
+from .. import consistency_checks
 
-class TestDirectories(unittest.TestCase):
-    def setUp(self):
-        pass
-
+class TestDirectories(unittest.TestCase, consistency_checks.ConsistencyChecker):
     def test_random_names(self):
         '''
         Test the directories.generate_name function. Checks that the length is
         correct, and that all the characters come from the alphanumeric characters
         set.
         '''
-
-        #Note that it is IMPOSSIBLE to determine with certainty that the
-        #generate_name function is perfoming perfectly. Instead, we repeat the
-        #sanity checks 1000 times, giving a .1% chance of a false positive
         for _ in xrange(1000):
             name = directories.directory_name()
             #length is beteen 1 and 32
@@ -89,3 +83,9 @@ class TestDirectories(unittest.TestCase):
         with self.assertRaises(ValueError):
             generator = directories.directory_generator(max_subdirectories_per_directory=-5)
             next(generator)
+
+    def test_directory_name_consistency(self):
+        self.check_consistency(directories.directory_name)
+
+    def test_directory_heirarchy_consistency(self):
+        self.check_consistency_iterator(directories.directory_generator)

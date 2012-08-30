@@ -6,6 +6,7 @@ import directories
 import files
 import dates
 import url
+from .. import utility
 
 def make_dates(generator=random):
     '''
@@ -29,7 +30,10 @@ def user_data_generator(num_directories, bucket=None, max_depth=None, max_subdir
     MongoDB for a single user. Iterates infinitly.
     '''
     dirs = list(itertools.islice(directories.directory_generator(max_depth, max_subdirectories, generator=generator), num_directories))
-    id = bson.ObjectId() if id is None else id
+    
+    #TODO: figure out how to tie OID creation into the random number generators
+    hex_set = '0123456789abcdef'
+    id = bson.ObjectId(''.join(utility.sample_wr(hex_set, 24, generator=generator))) if id is None else id
     bucket_url = url.generate_url(bucket, generator=generator)
 
     while True:

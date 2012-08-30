@@ -1,8 +1,10 @@
 import re
 import unittest
-import files
 
-class TestMimeGeneration(unittest.TestCase):
+import files
+from .. import consistency_checks
+
+class TestMimeGeneration(unittest.TestCase, consistency_checks.ConsistencyChecker):
     def check_valid_mime_type(self, mime_type, extension):
         type, subtype = mime_type
 
@@ -39,8 +41,10 @@ class TestMimeGeneration(unittest.TestCase):
         with self.assertRaises(KeyError):
             mime_type, extension = files.random_mime_type("foo")
 
+    def test_mime_consistency(self):
+        self.check_consistency(files.random_mime_type)
 
-class TestFiles(unittest.TestCase):
+class TestFiles(unittest.TestCase, consistency_checks.ConsistencyChecker):
     def test_file_name(self):
         for _ in xrange(1000):
             name = files.file_name()
@@ -55,3 +59,9 @@ class TestFiles(unittest.TestCase):
         type, subtype = mime_type.split('/')
 
         self.assertEqual(file_type, files.mime_types[type][subtype])
+
+    def test_file_name_consistency(self):
+        self.check_consistency(files.file_name)
+
+    def test_file_consistency(self):
+        self.check_consistency(files.file)

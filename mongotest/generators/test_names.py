@@ -1,5 +1,7 @@
 import unittest
 import re
+import random
+
 import names
 
 class TestNames(unittest.TestCase):

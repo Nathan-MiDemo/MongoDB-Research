@@ -1,9 +1,11 @@
 import unittest
 import re
+import random
 
 import dates
+from .. import consistency_checks
 
-class TestDateGenerator(unittest.TestCase):
+class TestDateGenerator(unittest.TestCase, consistency_checks.ConsistencyChecker):
     def test_date_generation(self):
         for _ in xrange(1000):
             sample_date = dates.random_datetime()
@@ -39,3 +41,7 @@ class TestDateGenerator(unittest.TestCase):
             self.assertLessEqual(minute, 59)
             self.assertGreaterEqual(second, 0)
             self.assertLessEqual(second, 59)
+
+    def test_date_consistency(self):
+        self.check_consistency(dates.random_datetime)
+      

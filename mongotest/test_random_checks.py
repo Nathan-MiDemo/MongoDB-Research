@@ -1,11 +1,11 @@
 import unittest
 import random
 
-import random_checks
+import consistency_checks
 
 class TestRandomChecks(unittest.TestCase):
     def setUp(self):
-        class SampleTester(unittest.TestCase, random_checks.RandomDataTester):
+        class SampleTester(unittest.TestCase, consistency_checks.ConsistencyChecker):
             def runTest(self):
                 pass
 

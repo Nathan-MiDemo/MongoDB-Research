@@ -1,9 +1,10 @@
 import unittest
-import utility
 
+import utility
+import random_checks
 #Sadly, only basic sanity tests are possible here
 #TODO: do some statistical analysis. With 1000 values, it SHOULD be within some reasonable % of the mean
-class TestBellCurve(unittest.TestCase):
+class TestBellCurve(unittest.TestCase, random_checks.RandomDataTester):
     def test_basic_range(self):
         for _ in xrange(1000):
             x = utility.random_int_bell_curve(30, 100)
@@ -13,6 +14,9 @@ class TestBellCurve(unittest.TestCase):
     def test_invalid_range(self):
         with self.assertRaises(ValueError):
             x = utility.random_int_bell_curve(100, 30)
+
+    def test_consistency(self):
+        self.check_consistency(utility.random_int_bell_curve, 0, 100)
 
 class TestQuantify(unittest.TestCase):
     def test_quantify(self):
