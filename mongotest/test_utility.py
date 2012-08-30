@@ -4,7 +4,7 @@ import utility
 import consistency_checks
 #Sadly, only basic sanity tests are possible here
 #TODO: do some statistical analysis. With 1000 values, it SHOULD be within some reasonable % of the mean
-class TestBellCurve(unittest.TestCase, consistency_checks.RandomDataTester):
+class TestBellCurve(unittest.TestCase, consistency_checks.ConsistencyChecker):
     def test_basic_range(self):
         for _ in xrange(1000):
             x = utility.random_int_bell_curve(30, 100)
