@@ -10,7 +10,10 @@ def random_int_bell_curve(min, max, lean=.5, narrow=10, generator=random):
     graph will be.
     '''
 
-    if min >= max:
+    if min == max:
+        return min
+
+    if min > max:
         raise ValueError("Invalid min-max range for random int generation")
 
     if not 0 <= lean <= 1:
@@ -58,7 +61,10 @@ def test_bell_curve(samples, scale, min, max, lean):
     '''
     print_histogram((random_int_bell_curve(min, max, lean) for _ in xrange(samples)), scale, min, max)
 
-#Lifted directly from the itertools recipie page
+def sample_wr(population, k, generator=random):
+    return [generator.choice(population) for _ in xrange(k)]
+
+#Lifted directly from the itertools recipies page
 def quantify(iterable, pred=bool):
     '''Count how many times the predicate is true'''
     return sum(itertools.imap(pred, iterable))
